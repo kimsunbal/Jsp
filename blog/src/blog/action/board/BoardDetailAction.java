@@ -18,7 +18,6 @@ import blog.model.Comment;
 import blog.model.User;
 import blog.util.Script;
 import blog.util.Utils;
-import javafx.scene.control.Alert;
 
 public class BoardDetailAction implements Action {
 

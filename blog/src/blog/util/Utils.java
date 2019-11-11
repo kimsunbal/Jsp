@@ -9,7 +9,6 @@ import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
 import blog.model.Board;
-import lombok.ToString;
 
 public class Utils {
 
@@ -90,7 +89,7 @@ public class Utils {
 			for (Element element : ets) {
 				String href = element.attr("href");
 				String value = element.text();
-				if (href.contains("https://www.youtube.com/watch") && !element.text().equals("")) {
+				if (href.contains("https://www.youtube.com/watch") && !value.equals("")) {
 					String video[] = href.split("=");
 					String v = video[1];
 					String iframe = "<iframe src=\"https://www.youtube.com/embed/" + v
@@ -101,6 +100,22 @@ public class Utils {
 			board.setContent(doc.toString());
 		}
 	}
+	
+	public static String getPureContent(String content) {
+		   
+	      String searchContent = "";
+	      try {         
+	         Document doc;
+	         doc = Jsoup.parse(content);         
+	          Elements spanTags = doc.getAllElements();
+	          for (Element spanTag : spanTags) {
+	              searchContent += spanTag.ownText();
+	          }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      return searchContent;
+	   }
 
 	@Test
 	public void youtubeTest() {

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import blog.model.Board;
 import blog.model.Comment;
 import blog.util.DBClose;
 

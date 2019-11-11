@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blog.model.Board;
-import blog.model.User;
 import blog.util.DBClose;
 
 public class BoardDao {
@@ -250,4 +249,23 @@ public class BoardDao {
 		}
 		return null;
 	}
+	
+	public int searchCount(String searchContent) {
+		final String query = "SELECT content FROM board2 WHERE content LIKE ? OR username LIKE ? OR content LIKE ?";
+		conn = DBConn.getConnection();
+		System.out.println(searchContent);
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchContent);
+			int result = pstmt.executeUpdate();// 변경된 열의 갯수
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
+	
 }

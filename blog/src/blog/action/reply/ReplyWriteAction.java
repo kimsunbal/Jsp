@@ -1,6 +1,5 @@
 package blog.action.reply;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 

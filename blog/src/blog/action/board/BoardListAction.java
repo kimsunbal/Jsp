@@ -16,7 +16,7 @@ import blog.util.Utils;
 
 public class BoardListAction implements Action{
 	
-	private final static String TAG = "BoardListAction: ";
+//	private final static String TAG = "BoardListAction: ";
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

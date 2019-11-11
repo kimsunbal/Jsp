@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import blog.model.Board;
 import blog.model.Comment;
-import jdk.nashorn.internal.parser.JSONParser;
 
 @WebServlet("/test/reply")
 public class ReplyTest extends HttpServlet {

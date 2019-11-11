@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import blog.action.Action;
 import blog.dao.BoardDao;
-import blog.dao.UserDao;
 import blog.model.Board;
 import blog.model.User;
 import blog.util.Script;

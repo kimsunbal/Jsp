@@ -163,8 +163,8 @@
 				<div class="blog_right_sidebar">
 					<aside class="single_sidebar_widget search_widget">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search Posts"> <span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+							<input type="text" class="form-control" placeholder="Search Posts" id="searchText"> <span class="input-group-btn">
+								<button class="btn btn-default" type="button" onClick="search()">
 									<i class="lnr lnr-magnifier"></i>
 								</button>
 							</span>
@@ -201,7 +201,11 @@
 	}
 	function plusfive() {
 		x = x - 5;
-
+	}
+	
+	function search(){
+		var searchcontent = $('#searchText').val();
+		location.href="/blog/board?cmd=search&content="+searchcontent;
 	}
 </script>
 

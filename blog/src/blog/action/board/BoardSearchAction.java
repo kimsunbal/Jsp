@@ -8,23 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import blog.action.Action;
 import blog.dao.BoardDao;
-import blog.model.Board;
-import blog.util.Script;
 
-public class BoardDeleteAction implements Action {
+public class BoardSearchAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("id"));
-		Board board = new Board();
-		board.setId(Integer.parseInt(request.getParameter("id")));
-		
+		String content = "%"+request.getParameter("content")+"%";
+		System.out.println("BoardSearchAction >>> "+content);
 		BoardDao dao = new BoardDao();
-		int result = dao.delete(board);
-		
-		if (result == 1) {
-			response.sendRedirect("/blog/index.jsp");
-		} else {
-			Script.back(response);
-		}
+		int result = dao.searchCount(content);
+		System.out.println(result+"건이 검색되었습니다");
 	}
 }

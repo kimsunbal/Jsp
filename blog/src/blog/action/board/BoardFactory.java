@@ -17,6 +17,8 @@ public class BoardFactory {
 			return new BoardUpdateFormAction();
 		case "update":
 			return new BoardUpdateAction();
+		case "search":
+			return new BoardSearchAction();
 		}
 		return null;
 	}
