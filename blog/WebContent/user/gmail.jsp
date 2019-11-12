@@ -12,10 +12,11 @@
 <%@page import="javax.mail.Session"%>
 <%@page import="java.util.Properties"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
 	//메일 전송하기
-	String to = (String)request.getAttribute("email"); // 1) 이메일 받기
+	String to = (String) request.getAttribute("email"); // 1) 이메일 받기
 	String from = "kimsunbal909@gmail.com";
 	String code = SHA256.getEncrypt(to, "cos"); //2) 코드값 해쉬
 	//String host = "http://localhost:8000/blog"; 안적어도 된다고 하심
@@ -24,12 +25,10 @@
 	String subject = "MyBlog 회원가입을 위한 이메일 인증 메일입니다.";
 	StringBuffer sb = new StringBuffer();
 	sb.append("다음 링크에 접속하여 이메일 인증을 진행해주세요.");
-	sb.append("<form action='http://localhost:8000/blog/test/gmailCheck.jsp?code="+code+"' method='post'>");
-	sb.append("<input type='hidden' name='email' value='"+to+"'>");
+	sb.append("<form action='http://localhost:8000/blog/test/gmailCheck.jsp?code=" + code + "' method='post'>");
+	sb.append("<input type='hidden' name='email' value='" + to + "'>");
 	sb.append("<button type='submit' value='Add to favorites' >이메일 인증하기</button>");
 	sb.append("</form>");
-
-
 
 	String content = sb.toString();
 
@@ -59,11 +58,18 @@
 		msg.setContent(content, "text/html; charset=UTF8");
 		Transport.send(msg); // 메일을 최종적으로 보내는 함수
 		session.setAttribute("mailAuth", to);
+
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('메일을 통해 인증을 완료해주세요');");
+		script.println("document.location.href = '/blog/index.jsp';");
+		script.println("</script>");
+
 	} catch (Exception e) {
 		//비정상 = 히스토리 백
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('이메일 인증 오류')");
+		script.println("alert('인증 메일 전송 오류')");
 		script.println("history.back();");
 		script.println("</script>");
 	}
@@ -76,6 +82,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>인증 메일이 전송되었습니다. 이메일에서 인증해주세요.</h1>
+
 </body>
 </html>

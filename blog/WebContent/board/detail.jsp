@@ -1,5 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/include/nav.jsp"%>
+<c:if test="${empty sessionScope.user.id}">
+	<script>
+		location.href = "/blog/error/NoLogin.jsp"
+	</script>
+</c:if>
+<c:if test="${sessionScope.user.emailCheck ne 1}">
+	<script>
+		location.href = "/blog/error/NoEmailAuth.jsp"
+	</script>
+</c:if>
 <!--================Blog Area =================-->
 <section class="blog_area single-post-area">
 	<div class="container">
@@ -8,13 +19,14 @@
 			<div class="col-lg-8">
 				<div class="main_blog_details">
 					<a href="#"><h4>${board.title}</h4></a>
-					<h4>ㅇㅇㅇㅇㅇ${cookie.username.value}</h4>
 					<c:choose>
 						<c:when test="${empty cookie.username.value}">
-							<input type="hidden" name="cookieUsername" value="${sessionScope.user.id}" />
+							<input type="hidden" name="cookieUsername"
+								value="${sessionScope.user.id}" />
 						</c:when>
 						<c:otherwise>
-							<input type="hidden" name="cookieUsername" value="${cookie.username.value}" />
+							<input type="hidden" name="cookieUsername"
+								value="${cookie.username.value}" />
 						</c:otherwise>
 					</c:choose>
 					<div class="user_details">
@@ -31,7 +43,7 @@
 									<p>${board.createDate}</p>
 								</div>
 								<div class="d-flex">
-									<img src="${board.user.userProfilepath}" alt="">
+									<img src="${board.user.userProfile}" width="50px" height="50px">
 								</div>
 							</div>
 						</div>
@@ -54,7 +66,8 @@
 							<div class="single-comment justify-content-between d-flex">
 								<div class="user justify-content-between d-flex">
 									<div class="thumb">
-										<img src="${comment.user.userProfilepath}" alt="">
+										<img src="${comment.user.userProfile}" width="50px"
+											height="50px">
 									</div>
 									<div class="desc">
 										<h5>
@@ -66,11 +79,16 @@
 								</div>
 
 								<div class="reply-btn">
-									<button onClick="commentDelete(${comment.id})" class="btn-reply text-uppercase" style="display: inline-block; float: left; margin-right: 10px;">삭제</button>
-									<button onClick="replyListShow(${comment.id})" class="btn-reply text-uppercase" style="display: inline-block; float: left; margin-right: 10px;">답글</button>
+									<button onClick="commentDelete(${comment.id})"
+										class="btn-reply text-uppercase"
+										style="display: inline-block; float: left; margin-right: 10px;">삭제</button>
+									<button onClick="replyListShow(${comment.id})"
+										class="btn-reply text-uppercase"
+										style="display: inline-block; float: left; margin-right: 10px;">답글</button>
 								</div>
 							</div>
-							<input type="hidden" id="reply-form-state-${comment.id}" value="blank">
+							<input type="hidden" id="reply-form-state-${comment.id}"
+								value="blank">
 							<div id="reply-form-${comment.id}"></div>
 							<div id="reply-list-${comment.id}"></div>
 						</div>
@@ -85,12 +103,16 @@
 				<div class="comment-form" style="margin-top: 0px;">
 					<h4 style="margin-bottom: 20px">Leave a Comment</h4>
 					<form id="comment-submit">
-						<input type="hidden" name="userId" value="${sessionScope.user.id}" /> <input type="hidden" name="boardId" value="${board.id}" />
+						<input type="hidden" name="userId" value="${sessionScope.user.id}" />
+						<input type="hidden" name="boardId" value="${board.id}" />
 						<div class="form-group">
-							<textarea id="content" style="height: 60px" class="form-control mb-10" rows="2" name="content" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-								required=""></textarea>
+							<textarea id="content" style="height: 60px"
+								class="form-control mb-10" rows="2" name="content"
+								placeholder="Messege" onfocus="this.placeholder = ''"
+								onblur="this.placeholder = 'Messege'" required=""></textarea>
 						</div>
-						<button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>
+						<button type="button" onClick="commentWrite()"
+							class="primary-btn submit_btn">Post Comment</button>
 					</form>
 				</div>
 				<!-- 댓글 쓰기 끝 -->
@@ -108,11 +130,11 @@
 <!--================Comment Script =================-->
 <script>
    
-   function commentWriteForm(id, username, content, createDate, userProfilepath){
+   function commentWriteForm(id, username, content, createDate, userProfile){
        var comment_list = "<div class='comment-list' id='comment-id-"+id+"'> ";
        comment_list += "<div class='single-comment justify-content-between d-flex'> ";
        comment_list += "<div class='user justify-content-between d-flex'> ";
-       comment_list += "<div class='thumb'> <img src='"+userProfilepath+"' alt=''> </div> ";
+       comment_list += "<div class='thumb'> <img src='"+userProfile+"' width='50px' height='50px'> </div> ";
        comment_list += "<div class='desc'><h5><a href='#'>"+username+"</a></h5> ";
        comment_list += "<p class='date'>"+createDate+"</p><p class='comment'>"+content+"</p></div></div> ";
        comment_list += "<div class='reply-btn'>";
@@ -136,8 +158,8 @@
          success: function(result){
         	 console.log(result);
             if(result.responseData.status === "ok"){
-               var comment_et = commentWriteForm(result.id,result.user.username,result.content,result.createDate,result.user.userProfilepath);
-               console.log(result.user.userProfilepath);
+               var comment_et = commentWriteForm(result.id,result.user.username,result.content,result.createDate,result.user.userProfile);
+               console.log(result.user.userProfile);
                $("#comments-area").append(comment_et);
                $("#content").val("");
             }
@@ -180,7 +202,7 @@
 	   
 	   if ($("#reply-form-state-"+comment_id).val()==="blank") {
 		$("#reply-form-state-"+comment_id).val("full");
-		var comment_form_inner = "<h4 style='margin-bottom:20px'>Leave a Reply</h4><form id='reply-submit'><input type='hidden' name='userId' value='${sessionScope.user.id}' /> <input type='hidden' name='commentId' value='"+comment_id+"' /><div class='form-group'><textarea style='height:60px' class='form-control mb-10' rows='2' id='reply-content-"+comment_id+"' name='content' placeholder='Messege' required=''></textarea></div><button type='button' onClick='replyWrite()' class='primary-btn submit_btn'>Post Comment</button></form>";
+		var comment_form_inner = "<div class='comment-form' style='margin-top: 0px;'><h4 style='margin-bottom: 20px'>Leave a Reply</h4> <form id='reply-submit'> <input type='hidden' name='userId' value='${sessionScope.user.id}' /> <input type='hidden' name='commentId' value='"+comment_id+"' /> <div class='form-group'> <textarea style='height:60px' class='form-control mb-10' rows='2' id='reply-content-"+comment_id+"' name='content' placeholder='Messege' required=''></textarea> <button type='button' onClick='replyWrite()' class='primary-btn submit_btn' style='margin-top: 20px;'>Post Comment</button> </div> </form></div>";
 
 	      //<div class="comment-form" style="margin-top:0px;"></div>
 	      var comment_form = document.createElement("div"); //div 빈 박스 생성
@@ -202,8 +224,8 @@
 		        	 console.log(replys);
 					for(reply of replys){
 						//잘 받았으면 화면에 표시
-			               var reply_et = replyItemForm(reply.id,reply.user.username,reply.content,reply.createDate,reply.user.userProfilepath);
-						console.log(reply.user.userProfilepath);
+			               var reply_et = replyItemForm(reply.id,reply.user.username,reply.content,reply.createDate,reply.user.userProfile);
+						console.log(reply.user.userProfile);
 			               $("#reply-list-"+comment_id).append(reply_et);
 					}
 		            
@@ -225,7 +247,7 @@
 	      var replyItem = "<div class='comment-list left-padding'id='reply-id-"+id+"'>";
 	      replyItem+= "<div class='single-comment justify-content-between d-flex'>";
 	      replyItem+= "<div class='user justify-content-between d-flex'>";
-	      replyItem+= "<div class='thumb'><img src='"+userProfile+"' alt=''></div>";
+	      replyItem+= "<div class='thumb'><img src='"+userProfile+"' width='50px' height='50px'></div>";
 	      replyItem+= "<div class='desc'><h5><a href='#'>"+username+"</a></h5>";
 	      replyItem+= "<p class='date'>"+createDate+"</p>";
 	      replyItem+= "<p class='comment'>"+content+"</p>";
@@ -265,7 +287,7 @@
 	         success: function(reply){
 	            if(reply.responseData.status === "ok"){
 	            	console.log(reply);
-	            	var reply_et = replyItemForm(reply.id,reply.user.username,reply.content,reply.createDate,reply.user.userProfilepath);
+	            	var reply_et = replyItemForm(reply.id,reply.user.username,reply.content,reply.createDate,reply.user.userProfile);
 					 $("#reply-list-"+reply.commentId).prepend(reply_et);
 	               $("#reply-content-"+reply.commentId).val("");
 	            }

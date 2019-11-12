@@ -131,8 +131,8 @@ public class BoardDao {
 	public List<Board> findAll(int page) {
 		final String SQL = "SELECT * FROM board2 b, user u where b.userId = u.id ORDER BY b.id DESC limit ?, 3";
 		conn = DBConn.getConnection();
+		List<Board> boards = new ArrayList<>();
 		try {
-			List<Board> boards = new ArrayList<>();
 
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, (page - 1) * 3);
@@ -155,7 +155,7 @@ public class BoardDao {
 		} finally {
 			DBClose.close(conn, pstmt, rs);
 		}
-		return null;
+		return boards;
 	}
 
 	// 상세보기
@@ -205,25 +205,7 @@ public class BoardDao {
 		}
 		return -1;
 	}
-//
-////	조회수 증가 안함
-//	public int NotIncreaseReadCount(int id) {
-//		final String SQL = "UPDATE board2 SET readCount = readCount WHERE id = ?";
-//		conn = DBConn.getConnection();
-//		try {
-//			pstmt = conn.prepareStatement(SQL);
-//			pstmt.setInt(1, id);
-//			int result = pstmt.executeUpdate();
-//			return result;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			DBClose.close(conn, pstmt, rs);
-//		}
-//		return -1;
-//	}
 
-	
 	public List<Board> findOrderByReadCountDesc() {
 		final String SQL = "SELECT * FROM board2 ORDER BY readCount DESC limit 3";
 		conn = DBConn.getConnection();

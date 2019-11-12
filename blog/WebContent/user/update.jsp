@@ -9,7 +9,6 @@
 			<div class="col-lg-12">
 				<form class="row contact_form" action="/blog/user?cmd=update" method="POST" onsubmit="return validateCheck()" enctype="multipart/form-data">
 					<input type="hidden" name="id" value="${sessionScope.user.id}" />
-					<h1>${sessionScope.user.id}</h1>
 					<!-- 아이디 시작 -->
 					<div class="col-md-1"></div>
 					<div class="col-md-2">아이디</div>
@@ -76,7 +75,7 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-2">프로필 사진</div>
 					<div class="col-md-2">
-						<img src="${sessionScope.user.userProfilepath}" id="img__wrap" width="100px" height="100px">
+						<img src="${sessionScope.user.userProfile}" id="img__wrap" width="100px" height="100px">
 					</div>
 					<div class="col-md-7"></div>
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import blog.action.Action;
 import blog.dao.BoardDao;
 import blog.dao.CommentDao;
+import blog.dao.UserDao;
 import blog.model.Board;
 import blog.model.Comment;
 import blog.model.User;
@@ -47,8 +48,9 @@ public class BoardDetailAction implements Action {
 				cookieUsername = cookie.getValue();
 			}
 		}
-
 		BoardDao dao = new BoardDao();
+		UserDao udao = new UserDao();
+		
 		Board board = dao.findById(id);
 		
 		CommentDao commentDao = new CommentDao();
@@ -74,6 +76,9 @@ public class BoardDetailAction implements Action {
 				// 유튜브 주소 파싱
 				Utils.setPreviewYoutube(board);
 				// board를 request에 담고 dispatcher로 이동
+				user = udao.findByUserId(board.getUserId());
+				board.setUser(user);
+				System.out.println("board detail action"+user.getUserProfile());
 				request.setAttribute("board", board);
 				request.setAttribute("comments", comments);
 				RequestDispatcher dis = request.getRequestDispatcher("/board/detail.jsp");

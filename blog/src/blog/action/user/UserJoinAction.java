@@ -21,6 +21,7 @@ public class UserJoinAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		목적: form 태그에 있는 name 값을 받아서 DB에 insert하고 나서 페이지 이동
 		String path = request.getServletContext().getRealPath("media");
+		System.out.println("path>> "+path);
 		MultipartRequest multi = new MultipartRequest(request, path, 1024 * 1024 * 2, "UTF-8",
 				new DefaultFileRenamePolicy() // 동일한 파일명이 들어오면 파일명 뒤에 숫자를 붙임.
 		);
@@ -45,7 +46,7 @@ public class UserJoinAction implements Action {
 		user.setPassword(password);// Encryption(암호화)해야한다.
 		user.setEmail(email);
 		user.setAddress(address);
-		user.setUserProfilepath(filepath);
+		user.setUserProfile(filepath);
 		// DAO 연결하기
 		UserDao dao = new UserDao();
 		int result = dao.save(user);

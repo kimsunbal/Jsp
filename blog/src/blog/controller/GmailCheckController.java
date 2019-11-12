@@ -27,15 +27,15 @@ public class GmailCheckController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		String email = request.getParameter("email");
-		System.out.println("dddd>>"+email);
+		System.out.println("GmailCheckController 인증 email>> "+email);
 		// Result가 정상일때
 		// response.sendRedirect("/blog/test/gmailSendActionTest.jsp?email=" + email);
 
 		UserDao dao = new UserDao();
 		int result = dao.emailCheck(email);
-
+		System.out.println("GmailCheckController result 값>> "+ result);
 		if (result == 1) {
-			RequestDispatcher dis = request.getRequestDispatcher("/user/gmail.jsp");
+			RequestDispatcher dis = request.getRequestDispatcher("/user/login.jsp");
 			dis.forward(request, response);
 		} else {
 			RequestDispatcher dis = request.getRequestDispatcher("/index.jsp");

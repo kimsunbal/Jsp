@@ -70,7 +70,7 @@ public class Utils {
 						String previewImg = et.attr("src");// 이미지 소스 찾기
 						board.setPreviewImg(previewImg);
 					} else {
-						board.setPreviewImg("/blog/img/home-blog/blog-1.jpg");
+						board.setPreviewImg("/blog/img/storm_unplash.jpg");
 					}
 				}
 			} else {

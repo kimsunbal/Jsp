@@ -121,7 +121,7 @@ public class ReplyDao {
             reply.setContent(rs.getString("r.content"));
             reply.setCreateDate(rs.getTimestamp("r.createDate"));
             reply.getUser().setUsername(rs.getString("u.username"));
-            reply.getUser().setUserProfilepath(rs.getString("u.userProfile"));
+            reply.getUser().setUserProfile(rs.getString("u.userProfile"));
             replys.add(reply);
          }
          

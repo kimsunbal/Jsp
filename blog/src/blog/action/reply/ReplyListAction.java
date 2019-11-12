@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import blog.action.Action;
 import blog.dao.ReplyDao;
@@ -25,10 +26,8 @@ public class ReplyListAction implements Action {
 		List<Reply> replys = dao.findByCommentId(commentId);
 		
 		if (replys != null) {
-			Gson gson = new Gson();
-			System.out.println("replys>>"+replys);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").create();
 			String replyJson = gson.toJson(replys);
-			System.out.println("replyJson>>"+replyJson);
 			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print(replyJson);

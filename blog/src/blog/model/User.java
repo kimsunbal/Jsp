@@ -16,5 +16,6 @@ public class User {
 	private String email;
 	private String address;
 	private Timestamp createDate;
-	private String userProfilepath;
+	private String userProfile;
+	private String emailCheck;
 }

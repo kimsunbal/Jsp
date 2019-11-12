@@ -38,7 +38,7 @@ public class CommentDao {
 				comment.setContent(rs.getString("c.content"));
 				comment.setCreateDate(rs.getTimestamp("c.createDate"));
 				comment.getUser().setUsername(rs.getString("u.username"));
-				comment.getUser().setUserProfilepath(rs.getString("u.userProfile"));
+				comment.getUser().setUserProfile(rs.getString("u.userProfile"));
 				comments.add(comment);
 			}
 
