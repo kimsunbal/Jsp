@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 
 import blog.action.Action;
 import blog.dao.CommentDao;
+import blog.dao.UserDao;
 import blog.model.Comment;
+import blog.model.User;
 import blog.util.Script;
 
 public class CommentWriteAction implements Action{
@@ -28,7 +30,10 @@ public class CommentWriteAction implements Action{
 		comment.setContent(content);
 		
 		CommentDao dao = new CommentDao();
+		UserDao userDao = new UserDao();
 		int result = dao.save(comment);
+
+		System.out.println("comment write comment:  "+comment);
 		
 		if (result == 1) {
 			//db에서 가져와
@@ -37,11 +42,13 @@ public class CommentWriteAction implements Action{
 			comment.getResponseData().setStatus("ok");
 			comment.getResponseData().setStatusMsg("Write was completed");
 			Gson gson = new Gson();
+			User user = userDao.findByUserId(id);
+			comment.setUser(user);
+			System.out.println("comment write comment2:  "+comment);
 			String commentJSon = gson.toJson(comment);
 
 			PrintWriter out =response.getWriter();
 			response.setContentType("application/json");
-			System.out.println("json"+commentJSon);
 			out.print(commentJSon);
 			out.flush();
 		} else {

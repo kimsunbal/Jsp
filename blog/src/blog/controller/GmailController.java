@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import blog.model.User;
+
 
 @WebServlet("/api/gmail")
 public class GmailController extends HttpServlet {
@@ -24,8 +26,9 @@ public class GmailController extends HttpServlet {
       response.setCharacterEncoding("UTF-8");
       
 //      String id = request.getParameter("id");
-      String username = request.getParameter("username");
-      String email = request.getParameter("email");
+      User user = (User)request.getAttribute("user");
+      String username = user.getUsername();
+      String email = user.getEmail();
       System.out.println("인증에서 mail >> " + email);
       
       

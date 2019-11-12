@@ -49,11 +49,10 @@
 								</c:otherwise>
 							</c:choose>
 						</ul>
+						
 						<ul class="nav navbar-nav navbar-right header_social ml-auto">
-							<li class="nav-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
-							<li class="nav-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
-							<li class="nav-item"><a href="#"><i class="fa fa-dribbble"></i></a></li>
-							<li class="nav-item"><a href="#"><i class="fa fa-behance"></i></a></li>
+							<li class="nav-item" style="margin-top: 7px"><img src="${sessionScope.user.userProfilepath}" height="30px" "></li>
+							<li class="nav-item" style="margin-top: 7px">${sessionScope.user.username}</li>
 						</ul>
 					</div>
 				</div>

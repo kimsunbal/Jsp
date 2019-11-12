@@ -47,7 +47,7 @@ public class Utils {
 	// 미리보기 이미지 가져오기 유튜브 추가버전
 	public static void setPreviewImg(List<Board> boards) {
 		for (Board board : boards) {
-			if (board.getContent()!=null) {
+			if (board.getContent() != null) {
 				Document doc = Jsoup.parse(board.getContent());
 				Elements etyoutube = doc.select("a");
 				Element et = doc.selectFirst("img");
@@ -73,7 +73,7 @@ public class Utils {
 						board.setPreviewImg("/blog/img/home-blog/blog-1.jpg");
 					}
 				}
-			}else {
+			} else {
 				board.setPreviewImg("/blog/img/home-blog/blog-1.jpg");
 			}
 		}
@@ -100,22 +100,22 @@ public class Utils {
 			board.setContent(doc.toString());
 		}
 	}
-	
+
 	public static String getPureContent(String content) {
-		   
-	      String searchContent = "";
-	      try {         
-	         Document doc;
-	         doc = Jsoup.parse(content);         
-	          Elements spanTags = doc.getAllElements();
-	          for (Element spanTag : spanTags) {
-	              searchContent += spanTag.ownText();
-	          }
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }
-	      return searchContent;
-	   }
+
+		String searchContent = "";
+		try {
+			Document doc;
+			doc = Jsoup.parse(content);
+			Elements spanTags = doc.getAllElements();
+			for (Element spanTag : spanTags) {
+				searchContent += spanTag.ownText();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return searchContent;
+	}
 
 	@Test
 	public void youtubeTest() {

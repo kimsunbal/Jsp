@@ -1,44 +1,111 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<script src="/blog/js/jquery-3.2.1.min.js"></script>
 <%@ include file="/include/nav.jsp"%>
 <!--================Contact Area =================-->
 <section class="contact_area">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<form class="row contact_form" action="/blog/api/gmail" method="POST" onsubmit="return validateCheck()">
-					<div class="col-md-8">
+				<form class="row contact_form" action="/blog/user?cmd=join" method="POST" onsubmit="return validateCheck()" enctype="multipart/form-data">
+
+
+					<!-- 아이디 시작 -->
+					<div class="col-md-1"></div>
+					<div class="col-md-2">아이디</div>
+					<div class="col-md-5">
 						<div class="form-group">
-							<input type="text" class="form-control" id="username" name="username" placeholder="아이디를 입력하세요." required="required" maxlength="20">
+							<input type="text" class="form-control" id="username" onkeyup="usernameCheck()" name="username" placeholder="아이디를 입력하세요." required="required" maxlength="20">
 						</div>
 					</div>
-					<div class="col-md-2">
-						<span id="username_input" style="font-size: 10px; color: red; font-weight: bold;"></span></div>
-					<div class="col-md-2">
-						<div class="form-group float-right">
-							<a style="cursor: pointer;" class="blog_btn" onClick="usernameCheck()">중복확인</a>
-						</div>
+					<div class="col-md-4">
+						<span id="username_input" style="font-size: 10px; color: red; font-weight: bold;"></span>
 					</div>
 
+					<!-- 아이디 끝 -->
+
+					<!-- 한칸 띄우기 -->
 					<div class="col-md-12">
+						<br>
+					</div>
+					<!-- 한칸 띄우기 -->
+
+					<div class="col-md-1"></div>
+					<div class="col-md-2">비밀번호</div>
+					<div class="col-md-5">
 						<div class="form-group">
-							<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요." required="required" maxlength="20">
+							<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요." required="required" maxlength="20" onkeyup="passwordcheck()">
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-4"></div>
+
+					<div class="col-md-1"></div>
+					<div class="col-md-2">비밀번호 확인</div>
+					<div class="col-md-5">
 						<div class="form-group">
-							<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="동일한 비밀번호를 입력하세요." required="required" maxlength="20">
+							<input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="동일한 비밀번호를 입력하세요." required="required" maxlength="20" onkeyup="passwordcheck()">
 						</div>
 
 					</div>
+					<div class="col-md-4">
+						<span id="password_input" style="font-size: 12px; font-weight: bold;"></span>
+					</div>
+
+					<!-- 한칸 띄우기 -->
 					<div class="col-md-12">
+						<br>
+					</div>
+					<!-- 한칸 띄우기 -->
+					
+					<!-- 이메일 시작 -->
+					
+					<div class="col-md-1"></div>
+					<div class="col-md-2">이메일</div>
+					<div class="col-md-5">
 						<div class="form-group">
 							<input type="email" class="form-control" name="email" placeholder="이메일을 입력하세요." required="required" maxlength="40">
 						</div>
 					</div>
+					<div class="col-md-4"></div>
+					<!-- 이메일 끝 -->
+
+					<!-- 한칸 띄우기 -->
+					<div class="col-md-12">
+						<br>
+					</div>
+					<!-- 한칸 띄우기 -->
+
+					<div class="col-md-1"></div>
+					<div class="col-md-2">프로필 사진</div>
+					<div class="col-md-2">
+						<img id="img__wrap" width="100px" height="100px">
+					</div>
+					<div class="col-md-7"></div>
+
+
+					<!-- 한칸 띄우기 -->
+					<div class="col-md-12">
+						<br>
+					</div>
+					<!-- 한칸 띄우기 -->
+
+					<div class="col-md-3"></div>
+					<div class="col-md-2">
+						<input id="img__input" type="file" name="userProfile" />
+					</div>
+					<div class="col-md-7"></div>
+
+					<!-- 한칸 띄우기 -->
+					<div class="col-md-12">
+						<br>
+					</div>
+					<!-- 한칸 띄우기 -->
+
 					<!-- 도로명 주소 시작 -->
 
-					<div class="col-md-10">
+					<div class="col-md-1"></div>
+					<div class="col-md-2">주소</div>
+					<div class="col-md-7">
 						<div class="form-group">
 							<input type="text" class="form-control" id="roadFullAddr" name="address" placeholder="도로명 주소가 자동 입력됩니다." readonly>
 						</div>
@@ -65,7 +132,9 @@
 <script>
 	var usernameDuplicateCheck = false;
 	//아이디 중복 확인
-	function usernameCheck() {
+
+	function usernameCheck(e) {
+		console.log(e);
 		var username = document.querySelector("#username").value;
 
 		fetch("/blog/api/user?username=" + username).then(function(r) {
@@ -74,10 +143,10 @@
 			var status = r; //ok 중복되지 않음.
 			var et = document.querySelector("#username_input");
 			if (status === "possible") {
-				et.innerHTML = "사용할 수 있는 아이디 입니다.";
+				et.innerHTML = "<span style='color:Green'>사용 가능한 아이디 입니다</span>";
 				usernameDuplicateCheck = true;
 			} else {
-				et.innerHTML = "사용할 수 없는 아이디 입니다.";
+				et.innerHTML = "<span style='color:Red'>사용할 수 없는 아이디 입니다</span>";
 				usernameDuplicateCheck = false;
 			}
 		});
@@ -115,6 +184,44 @@
 			alert('비밀번호가 동일하지 않습니다. 다시 입력해주세요.');
 			return false;
 		}
+
+	}
+
+	function passwordcheck() {
+		var password = document.querySelector('#password').value;
+		var passwordCheck = document.querySelector('#passwordCheck').value;
+		if (password === passwordCheck) {
+			document.querySelector("#password_input").innerHTML = "<span style='color:Green'>비밀번호가 동일합니다</span>";
+			return true;
+		} else {
+			console.log('비밀번호가 틀렸습니다.');
+			document.querySelector("#password_input").innerHTML = "<span style='color:Red'>비밀번호가 동일하지 않습니다. 다시 입력해주세요</span>";
+			return false;
+		}
+	}
+
+	$("#img__input").on("change", handleImgFile);
+
+	function handleImgFile(e) {
+		console.log(e);
+		console.log(e.target);
+		console.log(e.target.files);
+		console.log(e.target.files[0]);
+		var f = e.target.files[0];
+
+		if (!f.type.match("image.*")) {
+			console.log("이미지 타입입니다.");
+			return;
+		}
+
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			console.log("========================");
+			console.log(e.target);
+			console.log(e.target.result);
+			$("#img__wrap").attr("src", e.target.result);
+		}
+		reader.readAsDataURL(f);
 	}
 </script>
 

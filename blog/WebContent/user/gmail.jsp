@@ -15,7 +15,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	//메일 전송하기
-	String to = request.getParameter("email"); // 1) 이메일 받기
+	String to = (String)request.getAttribute("email"); // 1) 이메일 받기
 	String from = "kimsunbal909@gmail.com";
 	String code = SHA256.getEncrypt(to, "cos"); //2) 코드값 해쉬
 	//String host = "http://localhost:8000/blog"; 안적어도 된다고 하심

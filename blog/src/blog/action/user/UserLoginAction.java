@@ -51,7 +51,7 @@ public class UserLoginAction implements Action {
 			
 			
 			HttpSession session = request.getSession();
-			user = dao.findUserId(username);
+			user = dao.findByUsername(username);
 			session.setAttribute("user", user);
 			response.sendRedirect("/blog/index.jsp");
 		} else {

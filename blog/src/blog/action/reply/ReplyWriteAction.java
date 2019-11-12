@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 
 import blog.action.Action;
 import blog.dao.ReplyDao;
+import blog.dao.UserDao;
 import blog.model.Reply;
+import blog.model.User;
 import blog.util.Script;
 
 public class ReplyWriteAction implements Action{
@@ -28,6 +30,7 @@ public class ReplyWriteAction implements Action{
 		reply.setContent(content);
 		System.out.println("ReplyWriteAction>>"+id+"   "+commentId+"   "+content+"   ");
 		ReplyDao dao = new ReplyDao();
+		UserDao userDao = new UserDao();
 		int result = dao.save(reply);
 		
 		if (result == 1) {
@@ -37,8 +40,10 @@ public class ReplyWriteAction implements Action{
 			reply.getResponseData().setStatus("ok");
 			reply.getResponseData().setStatusMsg("Write was completed");
 			Gson gson = new Gson();
+			User user = userDao.findByUserId(id);
+			reply.setUser(user);
+			System.out.println("reply:  "+reply);
 			String replyJSon = gson.toJson(reply);
-
 			PrintWriter out =response.getWriter();
 			response.setContentType("application/json");
 			System.out.println("json"+replyJSon);

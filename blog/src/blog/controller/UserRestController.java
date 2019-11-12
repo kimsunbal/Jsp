@@ -29,7 +29,7 @@ public class UserRestController extends HttpServlet {
       String username = request.getParameter("username");
       UserDao dao = new UserDao();
       PrintWriter out = response.getWriter();
-      if(dao.findUserId(username) != null) {
+      if(dao.findByUsername(username) != null) {
          //사용할 수 없음, 아이디가 존재함
          //println쓰면 개행문자까지 들어가서 안됨
          out.print("impossible");

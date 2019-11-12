@@ -12,6 +12,7 @@ import blog.dao.BoardDao;
 import blog.model.Board;
 import blog.model.User;
 import blog.util.Script;
+import blog.util.Utils;
 
 public class BoardWriteAction implements Action {
 	@Override
@@ -21,12 +22,14 @@ public class BoardWriteAction implements Action {
 		User user =(User)request.getSession().getAttribute("user");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		String searchContent = Utils.getPureContent(content);
 
 
 		Board board = new Board();
 		board.setUserId(user.getId());
 		board.setTitle(title);
 		board.setContent(content);
+		board.setSearchContent(searchContent);
 
 		BoardDao boardDao = new BoardDao();
 		

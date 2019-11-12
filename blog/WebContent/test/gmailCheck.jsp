@@ -21,7 +21,7 @@
 		//DB에 칼럼 emailCheck(Number)    ->      1 = 인증, 0 = 미인증     인증되면 1을 update
 		script.println("<script>");
 		script.println("alert('이메일 인증에 성공하였습니다.')");
-		script.println("location.href='login.jsp'"); //DB 업데이트 필요
+		script.println("location.href='/blog/api/gmailCheck?email="+email+"'"); //DB 업데이트 필요
 		script.println("</script>");
 	} else {
 		script.println("<script>");

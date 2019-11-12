@@ -14,6 +14,7 @@ public class Board {
 	private int userId;
 	private String title;
 	private String content;
+	private String searchContent;
 	private int readCount;
 	private Timestamp createDate;
 	private String previewImg;//DB와 상관없음

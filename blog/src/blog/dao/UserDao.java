@@ -15,7 +15,7 @@ public class UserDao {
 	private ResultSet rs;
 
 	public int save(User user) {
-		final String query = "INSERT into user(username, password, email, address, createDate) VALUES (?,?,?,?,now())";
+		final String query = "INSERT into user(username, password, email, address,userProfile, createDate) VALUES (?,?,?,?,?,now())";
 		conn = DBConn.getConnection();
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -23,6 +23,7 @@ public class UserDao {
 			pstmt.setString(2, user.getPassword());
 			pstmt.setString(3, user.getEmail());
 			pstmt.setString(4, user.getAddress());
+			pstmt.setString(5, user.getUserProfilepath());
 			int result = pstmt.executeUpdate();// 변경된 열의 갯수
 			return result;
 		} catch (Exception e) {
@@ -69,7 +70,7 @@ public class UserDao {
 		return -1;
 	}
 
-	public User findUserId(String username) {
+	public User findByUsername(String username) {
 		final String query = "SELECT * FROM user WHERE username =?";
 		conn = DBConn.getConnection();
 		try {
@@ -84,6 +85,7 @@ public class UserDao {
 				user.setEmail(rs.getString("email"));
 				user.setAddress(rs.getString("address"));
 				user.setCreateDate(rs.getTimestamp("createDate"));
+				user.setUserProfilepath(rs.getString("userProfile"));
 				return user;
 			}
 		} catch (Exception e) {
@@ -93,5 +95,50 @@ public class UserDao {
 		}
 		return null;
 	}
+	
+	
+	public User findByUserId(int userId) {
+		final String query = "SELECT * FROM user WHERE id =?";
+		conn = DBConn.getConnection();
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, userId);
 
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setUsername(rs.getString("username"));
+				user.setEmail(rs.getString("email"));
+				user.setAddress(rs.getString("address"));
+				user.setCreateDate(rs.getTimestamp("createDate"));
+				user.setUserProfilepath(rs.getString("userProfile"));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return null;
+	}
+	
+	public int emailCheck(String email) {
+		final String query = "UPDATE user SET emailCheck=1 WHERE email=? and emailCheck=0";
+		conn = DBConn.getConnection();
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, email);
+
+			int result = pstmt.executeUpdate();// 변경된 열의 갯수
+			
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
 }

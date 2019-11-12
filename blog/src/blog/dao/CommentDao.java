@@ -17,7 +17,7 @@ public class CommentDao {
 
 	public List<Comment> findAll(int boardId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT c.id, c.userId, c.boardId, c.content, c.createDate, u.username ");
+		sb.append("SELECT c.id, c.userId, c.boardId, c.content, c.createDate, u.username, u.userProfile ");
 		sb.append("FROM comment c, user u ");
 		sb.append("WHERE c.userId= u.id ");
 		sb.append("and boardId=?");
@@ -38,6 +38,7 @@ public class CommentDao {
 				comment.setContent(rs.getString("c.content"));
 				comment.setCreateDate(rs.getTimestamp("c.createDate"));
 				comment.getUser().setUsername(rs.getString("u.username"));
+				comment.getUser().setUserProfilepath(rs.getString("u.userProfile"));
 				comments.add(comment);
 			}
 

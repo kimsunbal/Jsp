@@ -17,7 +17,7 @@ public class BoardDao {
 	private ResultSet rs;
 
 	public int save(Board board) {
-		final String query = "INSERT into board2(userId, title, content, createDate) VALUES (?,?,?,now())";
+		final String query = "INSERT into board2(userId, title, content,searchContent, createDate) VALUES (?,?,?,?,now())";
 		conn = DBConn.getConnection();
 		System.out.println(board.getContent());
 		try {
@@ -25,6 +25,7 @@ public class BoardDao {
 			pstmt.setInt(1, board.getUserId());
 			pstmt.setString(2, board.getTitle());
 			pstmt.setString(3, board.getContent());
+			pstmt.setString(4, board.getSearchContent());
 			int result = pstmt.executeUpdate();// 변경된 열의 갯수
 			return result;
 		} catch (Exception e) {
@@ -251,14 +252,19 @@ public class BoardDao {
 	}
 	
 	public int searchCount(String searchContent) {
-		final String query = "SELECT content FROM board2 WHERE content LIKE ? OR username LIKE ? OR content LIKE ?";
+		final String query = "SELECT b.id, b.userId, u.username, b.title, b.content FROM board2 b, user u WHERE b.userId= u.id and (b.searchContent LIKE ? OR b.title LIKE ? OR u.username LIKE ?)";
 		conn = DBConn.getConnection();
-		System.out.println(searchContent);
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, searchContent);
-			int result = pstmt.executeUpdate();// 변경된 열의 갯수
-			return result;
+			pstmt.setString(2, searchContent);
+			pstmt.setString(3, searchContent);
+			rs = pstmt.executeQuery();
+			int count = 0;
+			while (rs.next()) {// rs.next(); 커서이동 return값 boolean
+				count++;
+			}
+			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -266,6 +272,36 @@ public class BoardDao {
 		}
 		return -1;
 	}
-	
+
+	public List<Board> searchBoard(String searchContent, int page) {
+		final String query = "SELECT b.id, b.userId, u.username, b.title, b.content,b.readCount,b.createDate FROM board2 b, user u WHERE b.userId= u.id and (b.searchContent LIKE ? OR b.title LIKE ? OR u.username LIKE ?) ORDER BY b.id DESC limit ?, 3";
+		conn = DBConn.getConnection();
+		List<Board> boards = new ArrayList<>();
+		try {			
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchContent);
+			pstmt.setString(2, searchContent);
+			pstmt.setString(3, searchContent);
+			pstmt.setInt(4, (page-1) * 3);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {// rs.next(); 커서이동 return값 boolean
+				Board board = new Board();
+				board.setId(rs.getInt("b.id"));
+				board.setUserId(rs.getInt("b.userId"));
+				board.setTitle(rs.getString("b.title"));
+				board.setContent(rs.getString("b.content"));
+				board.setReadCount(rs.getInt("b.readCount"));
+				board.setCreateDate(rs.getTimestamp("b.createDate"));
+				boards.add(board);
+			}
+			return boards;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return boards;
+	}
 	
 }
