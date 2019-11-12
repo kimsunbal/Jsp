@@ -40,7 +40,9 @@ public class UserJoinAction implements Action {
 		String filepath = contextpath + "/media/" + filename;
 
 		System.out.println("filepath>> " + filepath);
-
+		if (filepath.equals("/blog/media/null")) {
+			filepath="/blog/media/defaultProfile.jpg";//기본이미지 폴더위치로 변경
+		}
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);// Encryption(암호화)해야한다.
