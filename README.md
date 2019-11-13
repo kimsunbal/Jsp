@@ -35,7 +35,7 @@ CREATE TABLE reply(
     userId int,
     content varchar(300) not null,
     createDate timestamp,
-    
     foreign key (commentId) references comment (id),
     foreign key (userId) references user (id)
 )engine=InnoDB default charset=utf8;
+
