@@ -16,7 +16,6 @@ public class CommentDeleteAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader in = request.getReader();
 		int commentId = Integer.parseInt(in.readLine());
-		System.out.println("commentId: "+commentId);
 		CommentDao commentDao = new CommentDao();
 		int result =commentDao.delete(commentId);
 		if (result==1) {

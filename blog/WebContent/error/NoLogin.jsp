@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script>
 	alert('접근 권한이 없습니다. 로그인을 하세요.');
-	document.location.href = "/blog/index.jsp";
+	document.location.href = "/blog/user/login.jsp";
 </script>
 </head>
 <body>

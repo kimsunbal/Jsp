@@ -35,13 +35,14 @@ public class UserDao {
 	}
 
 	public int update(User user) {
-		final String query = "UPDATE user SET password=?,address=? WHERE id=?";
+		final String query = "UPDATE user SET password=?,address=?,userProfile=? WHERE id=?";
 		conn = DBConn.getConnection();
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, user.getPassword());
 			pstmt.setString(2, user.getAddress());
-			pstmt.setInt(3, user.getId());
+			pstmt.setString(3, user.getUserProfile());
+			pstmt.setInt(4, user.getId());
 			int result = pstmt.executeUpdate();// 변경된 열의 갯수
 			return result;
 		} catch (Exception e) {
@@ -133,6 +134,28 @@ public class UserDao {
 			int result = pstmt.executeUpdate();// 변경된 열의 갯수
 
 			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return -1;
+	}
+
+	public int emailCheckById(int id) {
+		final String query = "SELECT emailCheck FROM user WHERE id =?";
+		conn = DBConn.getConnection();
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if(rs.getString("emailCheck").equals("1")) {
+					return 1;
+				}				
+			}
+			return -1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

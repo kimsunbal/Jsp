@@ -43,8 +43,7 @@ public class BoardDetailAction implements Action {
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
 			System.out.print(cookie.getName());
-			System.out.println("   " + cookie.getMaxAge());
-			if (cookie.getName().equals(id + "board" + username)) {
+			if (cookie.getName().equals(id + "-" + username)) {
 				cookieUsername = cookie.getValue();
 			}
 		}
@@ -66,8 +65,8 @@ public class BoardDetailAction implements Action {
 			} else if (cookieUsername.equals("") || !cookieUsername.equals(username)) {// 쿠키에 값이 없을 때, 쿠키에 유저네임 값이 없을 때
 				System.out.println(TAG + "쿠키 저장>>" + username);
 				// 쿠키는 타임을 따로 지정해줘야 한다.
-				Cookie c = new Cookie(id + "board" + username, username);// board cookie
-				c.setMaxAge(60*60);// 1시간
+				Cookie c = new Cookie(id + "-" + username, username);// board cookie
+				c.setMaxAge(60*10);// 10분
 				response.addCookie(c);
 				result = dao.increaseReadCount(id);
 			}
@@ -78,17 +77,14 @@ public class BoardDetailAction implements Action {
 				// board를 request에 담고 dispatcher로 이동
 				user = udao.findByUserId(board.getUserId());
 				board.setUser(user);
-				System.out.println("board detail action"+user.getUserProfile());
 				request.setAttribute("board", board);
 				request.setAttribute("comments", comments);
 				RequestDispatcher dis = request.getRequestDispatcher("/board/detail.jsp");
 				dis.forward(request, response);
 			} else {
-				System.out.println(1);
 				Script.back(response);
 			}
 		} else {
-			System.out.println(2);
 			Script.back(response);
 		}
 

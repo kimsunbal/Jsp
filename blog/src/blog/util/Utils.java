@@ -74,7 +74,7 @@ public class Utils {
 					}
 				}
 			} else {
-				board.setPreviewImg("/blog/img/home-blog/blog-1.jpg");
+				board.setPreviewImg("/blog/img/storm_unplash.jpg");
 			}
 		}
 	}

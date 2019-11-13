@@ -22,11 +22,9 @@ public class BoardListAction implements Action {
 
 		BoardDao bDao = new BoardDao();
 		int count = bDao.CountAll();
-		if (request.getParameter("page") == null)
-			return;
+		if (request.getParameter("page") == null) return;
 
 		int page = Integer.parseInt(request.getParameter("page"));
-		System.out.println(page);
 		if (page <= 0) {
 			page = 1;
 			response.sendRedirect("/blog/board?cmd=list&page=" + page);
@@ -35,7 +33,7 @@ public class BoardListAction implements Action {
 			response.sendRedirect("/blog/board?cmd=list&page=" + count);
 			return;
 		}
-		
+
 		// maxNum 버튼 활성화
 		List<Board> boards = new ArrayList<Board>();
 		boards = bDao.findAll(page);

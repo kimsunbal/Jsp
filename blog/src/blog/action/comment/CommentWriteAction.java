@@ -16,38 +16,37 @@ import blog.model.Comment;
 import blog.model.User;
 import blog.util.Script;
 
-public class CommentWriteAction implements Action{
+public class CommentWriteAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("userId")==null||request.getParameter("userId").equals("")) 
+		if (request.getParameter("userId") == null || request.getParameter("userId").equals(""))
 			return;
 		int id = Integer.parseInt(request.getParameter("userId"));
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
-		String content =request.getParameter("content");
+		String content = request.getParameter("content");
 		Comment comment = new Comment();
 		comment.setUserId(id);
 		comment.setBoardId(boardId);
 		comment.setContent(content);
-		
+
 		CommentDao dao = new CommentDao();
 		UserDao userDao = new UserDao();
+
 		int result = dao.save(comment);
 
-		System.out.println("comment write comment:  "+comment);
-		
 		if (result == 1) {
-			//db에서 가져와
+			// db에서 가져와
 			comment = dao.findByMaxId();
 			comment.getResponseData().setStatusCode(1);
 			comment.getResponseData().setStatus("ok");
 			comment.getResponseData().setStatusMsg("Write was completed");
+
 			Gson gson = new Gson();
 			User user = userDao.findByUserId(id);
 			comment.setUser(user);
-			System.out.println("comment write comment2:  "+comment);
+			
 			String commentJSon = gson.toJson(comment);
-
-			PrintWriter out =response.getWriter();
+			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");
 			out.print(commentJSon);
 			out.flush();

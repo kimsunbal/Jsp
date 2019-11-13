@@ -41,7 +41,6 @@ public class BoardSearchAction implements Action {
 			page = count;
 		}
 
-		System.out.println("최대 페이지는 " + count + "입니다.");
 		// 검색된 보드 수
 		System.out.println(result + "건이 검색되었습니다");
 

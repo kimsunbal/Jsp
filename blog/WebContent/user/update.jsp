@@ -75,7 +75,7 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-2">프로필 사진</div>
 					<div class="col-md-2">
-						<img src="${sessionScope.user.userProfile}" id="img__wrap" width="100px" height="100px">
+						<img src="/blog/media/defaultProfile.jpg" id="img__wrap" width="100px" height="100px">
 					</div>
 					<div class="col-md-7"></div>
 

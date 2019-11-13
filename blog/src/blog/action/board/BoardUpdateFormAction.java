@@ -22,7 +22,6 @@ public class BoardUpdateFormAction implements Action {
 		BoardDao dao = new BoardDao();
 		Board board = dao.findById(id);
 		if (board != null) {
-			// 조회수 증가 - 쿠키를 저장해서 (1일) 쿠키가 있을 때 새로고침 방지하기
 			int result = dao.increaseReadCount(id);
 			if (result == 1) {
 				// 유튜브 주소 파싱

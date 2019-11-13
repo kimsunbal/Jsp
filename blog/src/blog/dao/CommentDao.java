@@ -50,6 +50,7 @@ public class CommentDao {
 		}
 		return null;
 	}
+
 	public int save(Comment comment) {
 		final String query = "INSERT into comment(userId, boardId, content, createDate) VALUES (?,?,?,now())";
 		conn = DBConn.getConnection();
@@ -68,8 +69,8 @@ public class CommentDao {
 		}
 		return -1;
 	}
-	
-	//동시 접근을 막는다 (임계구역)
+
+	// 동시 접근을 막는다 (임계구역)
 	synchronized public Comment findByMaxId() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT c.id, c.userId, c.boardId, c.content, c.createDate, u.username ");
@@ -98,6 +99,7 @@ public class CommentDao {
 		}
 		return null;
 	}
+
 	public int delete(int id) {
 		final String query = "DELETE FROM comment WHERE id=?";
 		conn = DBConn.getConnection();
@@ -110,6 +112,24 @@ public class CommentDao {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(conn, pstmt);
+		}
+		return -1;
+	}
+
+	public int findByBoardId(int boardId) {
+		final String query = "SELECT * FROM board2 WHERE id=?";
+		conn = DBConn.getConnection();
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardId);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {// rs.next(); 커서이동 return값 boolean
+				return 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {// 위에서 리턴해도 무조건 실행된다
+			DBClose.close(conn, pstmt, rs);
 		}
 		return -1;
 	}
