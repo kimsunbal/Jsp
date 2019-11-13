@@ -75,9 +75,12 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-2">프로필 사진</div>
 					<div class="col-md-2">
-						<img src="/blog/media/defaultProfile.jpg" id="img__wrap" width="100px" height="100px">
+						<img src="${sessionScope.user.userProfile}" id="img__wrap" width="100px" height="100px">
 					</div>
-					<div class="col-md-7"></div>
+					<div class="col-md-2">
+						<button type="button" onclick="userProfileChange()">기본이미지로 변경</button>
+					</div>
+					<div class="col-md-5"></div>
 
 
 					<!-- 한칸 띄우기 -->
@@ -198,6 +201,11 @@
 			$("#img__wrap").attr("src", e.target.result);
 		}
 		reader.readAsDataURL(f);
+	}
+
+	function userProfileChange() {
+		$("#img__wrap").attr("src", "/blog/media/defaultProfile.jpg");
+		$("#img__input").val("");
 	}
 </script>
 

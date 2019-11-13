@@ -36,14 +36,25 @@ public class UserUpdateAction implements Action {
 		String address = multi.getParameter("address");
 		String password = SHA256.getEncrypt(rawPassword, "cos");
 		String filename = multi.getFilesystemName("userProfile");// 정책에 의해서 변경된 이름
+		
+		
+		
+		String userProfileInput = multi.getParameter("userProfileInput");
+		System.out.println("userProfileInput"+userProfileInput);
+		
+		
+		
 //		String originFilename = multi.getOriginalFileName("userProfile");
 		String contextpath = request.getServletContext().getContextPath();
 		String filepath = contextpath + "/media/" + filename;
 
 		System.out.println("filepath>> " + filepath);
+		System.out.println("userProfileInput>> " + userProfileInput);
+		
 		if (filepath.equals("/blog/media/null")) {
 			filepath = "/blog/media/defaultProfile.jpg";// 기본이미지 폴더위치로 변경
 		}
+		
 		User user = new User();
 		user.setId(id);
 		user.setUsername(username);

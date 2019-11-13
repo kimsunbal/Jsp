@@ -151,9 +151,9 @@ public class UserDao {
 
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if(rs.getString("emailCheck").equals("1")) {
+				if (rs.getString("emailCheck").equals("1")) {
 					return 1;
-				}				
+				}
 			}
 			return -1;
 		} catch (Exception e) {
@@ -162,6 +162,26 @@ public class UserDao {
 			DBClose.close(conn, pstmt);
 		}
 		return -1;
+	}
+
+	public String findUserProfileByUserId(int userId) {
+		final String query = "SELECT * FROM user WHERE id =?";
+		conn = DBConn.getConnection();
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			String userProfile;
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				userProfile = rs.getString("userProfile");
+				return userProfile;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return null;
 	}
 
 }

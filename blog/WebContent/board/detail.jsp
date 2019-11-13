@@ -109,7 +109,7 @@
                   <div class="form-group">
                      <textarea id="content" style="height: 60px" class="form-control mb-10" rows="2" name="content"
                         placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-                        required=""></textarea>
+                        required></textarea>
                   </div>
                   <button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>
                </form>
