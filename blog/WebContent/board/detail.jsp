@@ -1,125 +1,121 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/nav.jsp"%>
 <c:if test="${empty sessionScope.user.id}">
-   <script>
+	<script>
       location.href = "/blog/error/NoLogin.jsp"
    </script>
 </c:if>
 
 <!--================Blog Area =================-->
 <section class="blog_area single-post-area">
-   <div class="container">
-      <div class="row">
-         <div class="col-lg-2"></div>
-         <div class="col-lg-8">
-            <div class="main_blog_details">
-               <a href="#">
-                  <h4>${board.title}</h4>
-               </a>
-               <c:choose>
-                  <c:when test="${empty cookie.username.value}">
-                     <input type="hidden" name="cookieUsername" value="${sessionScope.user.id}" />
-                  </c:when>
-                  <c:otherwise>
-                     <input type="hidden" name="cookieUsername" value="${cookie.username.value}" />
-                  </c:otherwise>
-               </c:choose>
-               <div class="user_details">
-                  <div class="float-left">
-                     <c:if test="${board.userId eq sessionScope.user.id}">
-                        <a href="/blog/board?cmd=updateForm&id=${board.id}">UPDATE</a>
-                        <a href="/blog/board?cmd=delete&id=${board.id}">DELETE</a>
-                     </c:if>
-                  </div>
-                  <div class="float-right">
-                     <div class="media">
-                        <div class="media-body">
-                           <h5>${board.user.username}</h5>
-                           <p>${board.createDate}</p>
-                        </div>
-                        <div class="d-flex">
-                           <img src="${board.user.userProfile}" width="50px" height="50px">
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <p>${board.content}</p>
-               <hr>
-            </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-8">
+				<div class="main_blog_details">
+					<a href="#">
+						<h4>${board.title}</h4>
+					</a>
+					<c:choose>
+						<c:when test="${empty cookie.username.value}">
+							<input type="hidden" name="cookieUsername" value="${sessionScope.user.id}" />
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" name="cookieUsername" value="${cookie.username.value}" />
+						</c:otherwise>
+					</c:choose>
+					<div class="user_details">
+						<div class="float-left">
+							<c:if test="${board.userId eq sessionScope.user.id}">
+								<a href="/blog/board?cmd=updateForm&id=${board.id}">UPDATE</a>
+								<a href="/blog/board?cmd=delete&id=${board.id}">DELETE</a>
+							</c:if>
+						</div>
+						<div class="float-right">
+							<div class="media">
+								<div class="media-body">
+									<h5>${board.user.username}</h5>
+									<p>${board.createDate}</p>
+								</div>
+								<div class="d-flex">
+									<img src="${board.user.userProfile}" width="50px" height="50px">
+								</div>
+							</div>
+						</div>
+					</div>
+					<p>${board.content}</p>
+					<hr>
+				</div>
 
-            <!-- 댓글 시작 -->
-            <!-- before -->
-            <div class="comments-area" id="comments-area">
-               <!-- prepend -->
-               <c:forEach var="comment" items="${comments}">
+				<!-- 댓글 시작 -->
+				<!-- before -->
+				<div class="comments-area" id="comments-area">
+					<!-- prepend -->
+					<c:forEach var="comment" items="${comments}">
 
 
-                  <!-- 댓글 아이템 시작 -->
-                  <div class="comment-list" id="comment-id-${comment.id}">
-                     <!-- id 동적으로 만들기 -->
+						<!-- 댓글 아이템 시작 -->
+						<div class="comment-list" id="comment-id-${comment.id}">
+							<!-- id 동적으로 만들기 -->
 
-                     <div class="single-comment justify-content-between d-flex">
-                        <div class="user justify-content-between d-flex">
-                           <div class="thumb">
-                              <img src="${comment.user.userProfile}" width="50px" height="50px">
-                           </div>
-                           <div class="desc">
-                              <h5>
-                                 <a href="#">${comment.user.username}</a>
-                              </h5>
-                              <p class="date">${comment.createDate}</p>
-                              <p class="comment">${comment.content}</p>
-                           </div>
-                        </div>
-                        <c:choose>
-                           <c:when test="${comment.user.username eq sessionScope.user.username}">
-                              <div class="reply-btn">
-                                 <button onClick="commentDelete(${comment.id})" class="btn-reply text-uppercase"
-                                    style="display: inline-block; float: left; margin-right: 10px;">삭제</button>
-                                 <button onClick="replyListShow(${comment.id})" class="btn-reply text-uppercase"
-                                    style="display: inline-block; float: left; margin-right: 10px;">답글</button>
-                              </div>
-                           </c:when>
-                           <c:otherwise>
-                              <div class="reply-btn">
-                                 <button onClick="replyListShow(${comment.id})" class="btn-reply text-uppercase"
-                                    style="display: inline-block; float: left; margin-right: 10px;">답글</button>
-                              </div>
-                           </c:otherwise>
-                        </c:choose>
+							<div class="single-comment justify-content-between d-flex">
+								<div class="user justify-content-between d-flex">
+									<div class="thumb">
+										<img src="${comment.user.userProfile}" width="50px" height="50px">
+									</div>
+									<div class="desc">
+										<h5>
+											<a href="#">${comment.user.username}</a>
+										</h5>
+										<p class="date">${comment.createDate}</p>
+										<p class="comment">${comment.content}</p>
+									</div>
+								</div>
+								<c:choose>
+									<c:when test="${comment.user.username eq sessionScope.user.username}">
+										<div class="reply-btn">
+											<button onClick="commentDelete(${comment.id})" class="btn-reply text-uppercase" style="display: inline-block; float: left; margin-right: 10px;">삭제</button>
+											<button onClick="replyListShow(${comment.id})" class="btn-reply text-uppercase" style="display: inline-block; float: left; margin-right: 10px;">답글</button>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="reply-btn">
+											<button onClick="replyListShow(${comment.id})" class="btn-reply text-uppercase" style="display: inline-block; float: left; margin-right: 10px;">답글</button>
+										</div>
+									</c:otherwise>
+								</c:choose>
 
-                     </div>
-                     <input type="hidden" id="reply-form-state-${comment.id}" value="blank">
-                     <div id="reply-form-${comment.id}"></div>
-                     <div id="reply-list-${comment.id}"></div>
-                  </div>
-                  <!-- 댓글 아이템 끝 -->
-               </c:forEach>
-               <!-- append -->
-            </div>
-            <!-- after -->
-            <!-- 댓글 끝 -->
+							</div>
+						<hr>
+							<input type="hidden" id="reply-form-state-${comment.id}" value="blank">
+							<div id="reply-form-${comment.id}"></div>
+							<div id="reply-list-${comment.id}"></div>
+						</div>
+						<!-- 댓글 아이템 끝 -->
+					</c:forEach>
+					<!-- append -->
+				</div>
+				<!-- after -->
+				<!-- 댓글 끝 -->
 
-            <!-- 댓글 쓰기 시작 -->
-            <div class="comment-form" style="margin-top: 0px;">
-               <h4 style="margin-bottom: 20px">Leave a Comment</h4>
-               <form id="comment-submit">
-                  <input type="hidden" name="userId" value="${sessionScope.user.id}" /> <input type="hidden"
-                     name="boardId" value="${board.id}" />
-                  <div class="form-group">
-                     <textarea id="content" style="height: 60px" class="form-control mb-10" rows="2" name="content"
-                        placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-                        required></textarea>
-                  </div>
-                  <button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>
-               </form>
-            </div>
-            <!-- 댓글 쓰기 끝 -->
-         </div>
+				<!-- 댓글 쓰기 시작 -->
+				<div class="comment-form" style="margin-top: 0px;">
+					<h4 style="margin-bottom: 20px">Leave a Comment</h4>
+					<form id="comment-submit">
+						<input type="hidden" name="userId" value="${sessionScope.user.id}" /> <input type="hidden" name="boardId" value="${board.id}" />
+						<div class="form-group">
+							<textarea id="content" style="height: 60px" class="form-control mb-10" rows="2" name="content" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+								required></textarea>
+						</div>
+						<button type="button" onClick="commentWrite()" class="primary-btn submit_btn">Post Comment</button>
+					</form>
+				</div>
+				<!-- 댓글 쓰기 끝 -->
+			</div>
 
-         <div class="col-lg-2"></div>
-      </div>
-   </div>
+			<div class="col-lg-2"></div>
+		</div>
+	</div>
 </section>
 
 <!--================Blog Area =================-->
@@ -132,7 +128,7 @@
 
    function commentWriteForm(id, username, content, createDate, userProfile) {
 
-      var comment_list = "<div class='comment-list' id='comment-id-" + id + "'> ";
+      var comment_list = "<div class='comment-list' id='comment-id-" + id + "'>";
       comment_list += "<div class='single-comment justify-content-between d-flex'> ";
       comment_list += "<div class='user justify-content-between d-flex'> ";
       comment_list += "<div class='thumb'> <img src='" + userProfile + "' width='50px' height='50px'> </div> ";
@@ -148,7 +144,7 @@
          comment_list += "<button onClick='replyListShow(" + id + ")' class='btn-reply text-uppercase'  style='display:inline-block; float:left; margin-right:10px;'>답글</button>";
          comment_list += "</div>";
       }
-      comment_list += "</div><input type='hidden' id='reply-form-state-" + id + "' value='blank'><div id='reply-form-" + id + "''></div><div id='reply-list-" + id + "'></div></div></div>";
+      comment_list += "</div><input type='hidden' id='reply-form-state-" + id + "' value='blank'><div id='reply-form-" + id + "''></div><div id='reply-list-" + id + "'></div></div><br><hr></div>";
       console.log(comment_list);
       return comment_list;
    }
@@ -165,7 +161,7 @@
       if ('${sessionScope.user.username}' === username) {
          replyItem += "<div class='reply-btn'><button onClick='replyDelete(" + id + ")' class='btn-reply text-uppercase'>삭제</button></div>";
       }
-      replyItem += "</div></div>";
+      replyItem += "</div><br><hr></div>";
       return replyItem;
    }
 
@@ -252,7 +248,7 @@
                   //잘 받았으면 화면에 표시
                   var reply_et = replyItemForm(reply.id, reply.user.username, reply.content, reply.createDate, reply.user.userProfile);
                   console.log(reply.user.userProfile);
-                  $("#reply-list-" + comment_id).append(reply_et);
+                  $("#reply-list-" + reply.commentId).append(reply_et);
                }
 
             },

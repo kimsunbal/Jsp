@@ -22,7 +22,8 @@ public class BoardListAction implements Action {
 
 		BoardDao bDao = new BoardDao();
 		int count = bDao.CountAll();
-		if (request.getParameter("page") == null) return;
+		if (request.getParameter("page") == null)
+			return;
 
 		int page = Integer.parseInt(request.getParameter("page"));
 		if (page <= 0) {
@@ -30,8 +31,10 @@ public class BoardListAction implements Action {
 			response.sendRedirect("/blog/board?cmd=list&page=" + page);
 			return;
 		} else if (page > count) {
-			response.sendRedirect("/blog/board?cmd=list&page=" + count);
-			return;
+			if (count != 0) {
+				response.sendRedirect("/blog/board?cmd=list&page=" + count);
+				return;
+			}
 		}
 
 		// maxNum 버튼 활성화
