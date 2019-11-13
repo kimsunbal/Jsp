@@ -3,7 +3,7 @@
 
 - git주소 : https://github.com/kimsunbal/Jsp
 
-![blog](https://blog.naver.com/kimsunbal/221706518917)
+https://blog.naver.com/kimsunbal/221706518917
 
 #### 1. 사용자 생성 및 권한 주기 및 DB 생성
 - create user 'cos'@'localhost' identified by 'bitc5600!';
