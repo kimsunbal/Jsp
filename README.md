@@ -1,4 +1,18 @@
 <h1>나의 첫번째 블로그</h1>
+#### 나만의 블로그 만들기 JSP+Model2+MySQL
+
+- git주소 : <https://github.com/codingspecialist/jsp-blog-mysql-2019-10>
+
+![blog](https://postfiles.pstatic.net/MjAxOTExMTJfNzYg/MDAxNTczNTM5NTA0NTUw.uoTg1BMfppFO5RnESgJliaDKr6lDNFZ9dkEXYcBXZDEg.8wCK4u8NLuajvx_5UG18szRcuzlexIAQppZsWb1m9Vog.PNG.getinthere/Screenshot_23.png?type=w773)
+
+#### 1. 사용자 생성 및 권한 주기 및 DB 생성
+- create user 'cos'@'localhost' identified by 'bitc5600!';
+- GRANT ALL PRIVILEGES ON *.* TO cos@localhost;
+- create database cos;
+- use cos;
+
+#### 2. 테이블
+```sql
 CREATE TABLE user(
    id int auto_increment primary key,
     username varchar(100) not null unique,
@@ -6,8 +20,9 @@ CREATE TABLE user(
     email varchar(100) not null,
     createDate timestamp
 ) engine=InnoDB default charset=utf8;
+```
 
-
+```sql
 CREATE TABLE board2(
    id int auto_increment primary key,
     userId int,
@@ -18,8 +33,9 @@ CREATE TABLE board2(
     searchContent longtext,
     foreign key (userId) references user (id)
 ) engine=InnoDB default charset=utf8;
+```
 
-
+```sql
 CREATE TABLE comment(
    id int auto_increment primary key,
     userId int,
@@ -29,7 +45,9 @@ CREATE TABLE comment(
     foreign key (userId) references user (id),
     foreign key (boardId) references board (id)
 ) engine=InnoDB default charset=utf8;
+```
 
+```sql
 CREATE TABLE reply(
    id int auto_increment primary key,
    commentId int,
@@ -39,4 +57,15 @@ CREATE TABLE reply(
     foreign key (commentId) references comment (id),
     foreign key (userId) references user (id)
 )engine=InnoDB default charset=utf8;
+```
+
+#### 3. Factory 세팅하기
+<https://blog.naver.com/codingspecialist/221681388208>
+
+#### 4. 부트스트랩 커스터마이징 HTML파일
+WebContent/ui_sample/**
+
+#### 5. 실행 영상
+<iframe width="640" height="360" src="https://www.youtube.com/embed/YyrSoUDwq-8" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+-youtube주소 : <https://www.youtube.com/watch?v=YyrSoUDwq-8>
 
