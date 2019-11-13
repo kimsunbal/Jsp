@@ -7,6 +7,7 @@ CREATE TABLE user(
     createDate timestamp
 ) engine=InnoDB default charset=utf8;
 
+
 CREATE TABLE board2(
    id int auto_increment primary key,
     userId int,
