@@ -43,7 +43,7 @@ CREATE TABLE comment(
     content varchar(300) not null,
     createDate timestamp,
     foreign key (userId) references user (id),
-    foreign key (boardId) references board (id)
+    foreign key (boardId) references board2 (id)
 ) engine=InnoDB default charset=utf8;
 ```
 
