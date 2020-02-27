@@ -3,7 +3,6 @@
 
 - git주소 : https://github.com/kimsunbal/Jsp
 
-https://sbgb.tistory.com/39
 
 #### 1. 사용자 생성 및 권한 주기 및 DB 생성
 - create user 'cos'@'localhost' identified by 'bitc5600!';
@@ -60,12 +59,12 @@ CREATE TABLE reply(
 ```
 
 #### 3. Factory 세팅하기
-<https://blog.naver.com/kimsunbal/221681438569>
+<https://sbgb.tistory.com/39>
 
 #### 4. 부트스트랩 커스터마이징 HTML파일
 WebContent/ui_sample/**
 
 #### 5. 실행 영상
 <iframe width="640" height="360" src="###" frameborder="0" gesture="media" allowfullscreen=""></iframe>
--blog : <https://blog.naver.com/kimsunbal/221706518917>
+-blog : <https://www.youtube.com/watch?v=3mKlfwW0Hxs>
 
