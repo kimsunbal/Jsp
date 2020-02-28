@@ -1,5 +1,5 @@
-<h1>나의 첫번째 블로그</h1>
-#### 나만의 블로그 만들기 JSP+Model2+MySQL
+<h1>블로그</h1>
+#### 블로그 만들기 JSP+Model2+MySQL
 
 - git주소 : https://github.com/kimsunbal/Jsp
 
@@ -65,6 +65,5 @@ CREATE TABLE reply(
 WebContent/ui_sample/**
 
 #### 5. 실행 영상
-<iframe width="640" height="360" src="###" frameborder="0" gesture="media" allowfullscreen=""></iframe>
--blog : <https://www.youtube.com/watch?v=3mKlfwW0Hxs>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3mKlfwW0Hxs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
