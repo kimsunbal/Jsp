@@ -59,8 +59,8 @@ CREATE TABLE reply(
 )engine=InnoDB default charset=utf8;
 ```
 
-#### 3. Factory 세팅하기
-<https://sbgb.tistory.com/39>
+#### 3. 기본구조 세팅하기
+https://main.tistory.com/110
 
 #### 4. 부트스트랩 커스터마이징 HTML파일
 WebContent/ui_sample/**
