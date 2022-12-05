@@ -1,5 +1,7 @@
 <h1>블로그</h1>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ty5lJdd6RGY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 #### 블로그 만들기 JSP+Model2+MySQL
 
 - git주소 : https://github.com/kimsunbal/Jsp
